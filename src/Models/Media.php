@@ -271,7 +271,7 @@ class Media extends Model implements Responsable, Htmlable
      */
     public function img($conversion = '', array $extraAttributes = []): string
     {
-        if (! (new Image())->canHandleMime($this->mime_type)) {
+        if ($conversion == '' && ! (new Image())->canHandleMime($this->mime_type)) {
             return '';
         }
 
