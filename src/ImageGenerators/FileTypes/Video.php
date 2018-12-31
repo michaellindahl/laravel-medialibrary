@@ -23,7 +23,9 @@ class Video extends BaseGenerator
 
         $seconds = $conversion ? $conversion->getExtractVideoFrameAtSecond() : 0;
 
-        $frame = $video->frame(TimeCode::fromSeconds($seconds));
+        $duration = floor($video->getFFProbe()->format($file)->get('duration'));
+
+        $frame = $video->frame(TimeCode::fromSeconds(min($seconds, $duration)));
         $frame->save($imageFile);
 
         return $imageFile;
